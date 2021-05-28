@@ -1,0 +1,13 @@
+fastapi>=0.63.0,<0.64.0 # pin according to FastAPI recommendations
+pydantic>=1.2.0,<2.0.0 # pin according to FastAPI recommendations
+aiofiles
+Jinja2
+python-multipart
+uvicorn
+sqlalchemy
+validators
+
+# Dev dependencies
+pylint
+pytest
+pytest-cov
