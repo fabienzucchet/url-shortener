@@ -10,6 +10,7 @@ validators
 influxdb-client
 requests_oauthlib
 python-jose
+user-agents
 
 # Dev dependencies
 pylint

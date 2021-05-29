@@ -4,7 +4,7 @@ import os
 from typing import List, Optional
 
 
-from fastapi import FastAPI, Depends, Request, HTTPException, Cookie, Response, status
+from fastapi import FastAPI, Depends, Request, HTTPException, Cookie, Response, status, Header
 from fastapi.responses import RedirectResponse
 from sqlalchemy.orm import Session
 
@@ -16,6 +16,9 @@ from .datastores.db.database import engine
 from .datastores.tsdb import queries
 from influxdb_client.client.write_api import SYNCHRONOUS
 from .datastores.common import EnrichedUrl
+
+from .datastores.common import RequestMetadata
+from user_agents import parse
 
 from .exceptions.RequiresLoginException import RequiresLoginException
 
@@ -95,15 +98,22 @@ async def delete_url(url_id: int, db: Session = Depends(get_db)):
 
 
 @app.get("/{short_url:path}", response_model=schemas.Url)
-async def get_url_by_short_url(short_url: str, username: str, db: Session = Depends(get_db), tsdb=Depends(get_timeseries_client)):
+async def get_url_by_short_url(short_url: str, username: str, db: Session = Depends(get_db), tsdb=Depends(get_timeseries_client), ua_string: Optional[str] = Header(None), referer: Optional[str] = Header(None)):
     url = crud.get_url_by_short_url(db=db, short_url=short_url)
     if url is None:
         raise HTTPException(
             status_code=204, detail="There is no such short URL")
+    request_metadata = RequestMetadata(referer=referer)
+    if ua_string is not None:
+        user_agent = parse(ua_string)
+        request_metadata.browser = user_agent.browser.family
+        request_metadata.os = user_agent.os.family
+        request_metadata.device = user_agent.device.family
     queries.new_access_url(
         w=tsdb.write_api(write_options=SYNCHRONOUS),
         url_id=url.id,
-        username=username
+        username=username,
+        metadata=request_metadata
     )
     return url
 
