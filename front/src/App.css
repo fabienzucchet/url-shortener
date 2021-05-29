@@ -13,6 +13,11 @@ body {
     width: 100%;
 }
 
+.main-page{
+    position: fixed;
+    top: 3em;
+}
+
 .navbar a,.navbar span {
     text-decoration: none;
     color: #FFF;
