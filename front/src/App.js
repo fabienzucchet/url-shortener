@@ -5,13 +5,16 @@ import {
   Route,
   useParams
 } from "react-router-dom";
+
 import './App.css';
 
 function App() {
   return (
     <Router>
+      <div className={"main-page"}>
         <Switch>
           <Route path="/dashboard">
+            {/* <Dashboard /> */}
             <Dashboard />
           </Route>
           <Route path="/url/list">
@@ -27,6 +30,7 @@ function App() {
             <Home />
           </Route>
         </Switch>
+      </div>
     </Router>
   );
 }
@@ -35,7 +39,7 @@ function Home() {
   return <h2>Home</h2>;
 }
 
-function Dashboard() {
+function Dashboard(props) {
   return <h2>Dashboard</h2>;
 }
 
