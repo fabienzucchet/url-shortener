@@ -29,3 +29,28 @@ services:
       DB_PASSWORD: changeme
       TZ: Europe/Paris
     restart: always
+  influxdb:
+    image: influxdb:latest
+    ports:
+      - '8086:8086'
+    volumes:
+      - influxdb-storage:/var/lib/influxdb
+    environment:
+      - INFLUXDB_DB=db0
+      - INFLUXDB_ADMIN_USER=influxdb
+      - INFLUXDB_ADMIN_PASSWORD=changeme
+  chronograf:
+    image: chronograf:latest
+    ports:
+      - '127.0.0.1:8888:8888'
+    volumes:
+      - chronograf-storage:/var/lib/chronograf
+    depends_on:
+      - influxdb
+    environment:
+      - INFLUXDB_URL=http://influxdb:8086
+      - INFLUXDB_USERNAME=influxdb
+      - INFLUXDB_PASSWORD=changeme
+volumes:
+  influxdb-storage:
+  chronograf-storage:
