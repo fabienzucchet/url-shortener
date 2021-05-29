@@ -2,6 +2,25 @@ body {
     background-color: #F2F3F5;
 }
 
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 1em;
+    background-color: #1C3040;
+}
+
+.navbar a,.navbar span {
+    text-decoration: none;
+    color: #FFF;
+    padding: 0.5em;
+}
+
+.navbar a:hover {
+    background-color: #2B4861;
+    border-radius: 5px;
+}
+
 div.widget {
     border: #D9DBDA 2px solid;
     border-top-width: 1px;

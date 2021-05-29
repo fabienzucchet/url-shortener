@@ -23,6 +23,7 @@ oauth = OAuth2Session(CLIENT_ID, redirect_uri=REDIRECT_URI, scope=SCOPE)
 
 JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
 
+
 @router.get("/login")
 async def login(code: Optional[str] = None, state: Optional[str] = None):
 
@@ -31,18 +32,25 @@ async def login(code: Optional[str] = None, state: Optional[str] = None):
         return RedirectResponse(authorization_url)
 
     else:
-        token = oauth.fetch_token(OAUTH_SERVER + TOKEN_URL, authorization_response=REDIRECT_URI, code=code, client_id=CLIENT_ID, client_secret=CLIENT_SECRET)
+        token = oauth.fetch_token(
+            OAUTH_SERVER + TOKEN_URL,
+            authorization_response=REDIRECT_URI,
+            code=code,
+            client_id=CLIENT_ID,
+            client_secret=CLIENT_SECRET
+        )
 
         res = oauth.get(OAUTH_SERVER + USERINFO_URL)
 
         user_data = res.json()
 
-        token = jwt.encode({"sub": user_data['login'], "user": user_data }, JWT_SECRET_KEY)
+        token = jwt.encode({"sub": user_data['login'], "user": user_data}, JWT_SECRET_KEY)
 
-        response = RedirectResponse('/me')
+        response = RedirectResponse('http://localhost:3000')
         response.set_cookie("session", token)
 
         return response
+
 
 @router.get("/logout")
 async def logout():

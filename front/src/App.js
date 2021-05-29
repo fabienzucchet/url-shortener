@@ -6,19 +6,24 @@ import {
   useParams
 } from "react-router-dom";
 
+import Navbar from './components/base/Navbar';
+
 import './App.css';
 
 function App() {
   return (
     <Router>
-      <div className={"main-page"}>
+      <Navbar />
+      <div className="main-page">
         <Switch>
           <Route path="/dashboard">
-            {/* <Dashboard /> */}
             <Dashboard />
           </Route>
           <Route path="/url/list">
             <UrlList />
+          </Route>
+          <Route path="/url/create">
+            <UrlCreate />
           </Route>
           <Route path="/url/edit/:id">
             <UrlEdit />
@@ -45,6 +50,10 @@ function Dashboard(props) {
 
 function UrlList() {
   return <h2>UrlList</h2>;
+}
+
+function UrlCreate() {
+  return <h2>UrlCreate</h2>;
 }
 
 function UrlEdit() {

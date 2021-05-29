@@ -10,7 +10,7 @@ from .datastores.db.database import SessionLocal
 from .datastores.tsdb.database import client
 from .exceptions.RequiresLoginException import RequiresLoginException
 
-## AUTHENTICATION DEPENDENCY ##
+# AUTHENTICATION DEPENDENCY #
 
 JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
 
@@ -25,7 +25,7 @@ def get_current_user(session: Optional[str] = Cookie(None)):
     return payload['user']
 
 
-## POSTGRESQL DATABASE DEPENCY ##
+# POSTGRESQL DATABASE DEPENDENCY #
 
 def get_db():
     """Create a connection to the database and make sure it is close at the end
@@ -39,6 +39,7 @@ def get_db():
     finally:
         db.close()
 
+# TIMESERIES DATABASE DEPENDENCY #
 
 def get_timeseries_client():
     tsdb = client

@@ -9,9 +9,9 @@ const Widget = (props: Props) => {
     const { title, children } = props;
 
     return (
-        <div className={"widget"}>
-            <h1 className={"widget-title"}>{title}</h1>
-            <div className={"widget-body"}>
+        <div className="widget">
+            <h1 className="widget-title">{title}</h1>
+            <div className="widget-body">
                 {children}
             </div>
         </div>
