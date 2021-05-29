@@ -40,7 +40,7 @@ def get_all_urls(db: Session):
 
 
 def get_user_urls(db: Session, username: str):
-    return db.query(models.Url).filter(models.Url.owner_username == username)
+    return db.query(models.Url).filter(models.Url.owner_username == username).all()
 
 #### Users ####
 
