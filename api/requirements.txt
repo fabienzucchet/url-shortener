@@ -7,6 +7,9 @@ uvicorn
 sqlalchemy
 psycopg2
 validators
+influxdb-client
+requests_oauthlib
+python-jose
 
 # Dev dependencies
 pylint
