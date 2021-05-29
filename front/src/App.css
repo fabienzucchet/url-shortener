@@ -6,8 +6,11 @@ body {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    padding: 1em;
+    padding: 1em 0;
     background-color: #1C3040;
+    position: fixed;
+    top: 0px;
+    width: 100%;
 }
 
 .navbar a,.navbar span {
