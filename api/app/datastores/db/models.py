@@ -11,8 +11,7 @@ from sqlalchemy import (
     Float,
 )
 from sqlalchemy.orm import relationship
-from sqlalchemy.sql.elements import Null
-from sqlalchemy.sql.expression import null
+from sqlalchemy.sql import func
 
 from .database import Base
 
@@ -28,6 +27,9 @@ class Url(Base):
     is_active = Column(Boolean, default=True)
     is_delete = Column(Boolean, default=False)
 
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+
     owner_username = Column(String, ForeignKey('users.username'))
     owner = relationship("User", back_populates="urls")
 
@@ -39,5 +41,8 @@ class User(Base):
 
     username = Column(String, nullable=False, unique=True)
     email = Column(String, nullable=False, unique=True)
+
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), onupdate=func.now())
 
     urls = relationship("Url", back_populates="owner")

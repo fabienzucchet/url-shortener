@@ -4,6 +4,8 @@ from typing import Optional, List
 
 from pydantic import BaseModel, AnyUrl
 
+import datetime
+
 #### URLs ####
 
 
@@ -18,6 +20,9 @@ class Url(UrlBase):
     is_active: bool
     is_delete: bool
 
+    created_at: datetime.datetime
+    updated_at: Optional[datetime.datetime] = None
+
     class Config:
         orm_mode = True
 
@@ -31,6 +36,9 @@ class UrlCreate(UrlBase):
 class UserBase(BaseModel):
     username: str
     email: str
+
+    created_at: datetime.datetime
+    updated_at: Optional[datetime.datetime] = None
 
 
 class User(UserBase):
