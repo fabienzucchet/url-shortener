@@ -1,9 +1,9 @@
 from .db import schemas
-from typing import List
+from typing import List, Optional
 
 from pydantic import BaseModel
 
 
 class EnrichedUrl(BaseModel):
-    url: schemas.Url
+    url: Optional[schemas.Url] = None
     stats: List
