@@ -132,3 +132,8 @@ dmypy.json
 # Random stuff
 .vscode
 .cache_ggshield
+
+
+# Javascript
+node_modules
+build

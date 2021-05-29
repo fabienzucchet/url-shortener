@@ -11,6 +11,17 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_DB: postgres
       POSTGRES_PASSWORD: changeme
+  front:
+    build:
+      context: ./front
+      dockerfile: Dockerfile
+    volumes:
+      - ./front:/app
+    ports:
+      - 3000:3000
+    depends_on:
+      - back
+    restart: always
   api:
     build:
       context: ./api
