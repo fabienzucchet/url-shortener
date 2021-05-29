@@ -25,7 +25,7 @@ services:
       DOCKER: "true"
       DB_USER: postgres
       DB_NAME: postgres
-      DB_HOST: website-monitoring-tool_db_1
+      DB_HOST: url-shortener_db_1
       DB_PASSWORD: changeme
       TZ: Europe/Paris
     restart: always

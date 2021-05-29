@@ -5,6 +5,7 @@ Jinja2
 python-multipart
 uvicorn
 sqlalchemy
+psycopg2
 validators
 
 # Dev dependencies
