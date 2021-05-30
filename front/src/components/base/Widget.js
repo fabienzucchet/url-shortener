@@ -10,7 +10,7 @@ const Widget = (props: Props) => {
 
     return (
         <div className="widget">
-            <h1 className="widget-title">{title}</h1>
+            {title && <h1 className="widget-title">{title}</h1>}
             <div className="widget-body">
                 {children}
             </div>

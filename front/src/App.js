@@ -8,6 +8,7 @@ import {
 
 import Navbar from './components/base/Navbar';
 import HomePage from './components/home/HomePage';
+import DashboardPage from './components/dashboard/DashboardPage';
 import UrlCreatePage from './components/url/create/UrlCreatePage';
 
 import './App.css';
@@ -19,7 +20,7 @@ function App() {
       <div className="main-page">
         <Switch>
           <Route path="/dashboard">
-            <Dashboard />
+            <DashboardPage />
           </Route>
           <Route path="/url/list">
             <UrlList />
@@ -40,10 +41,6 @@ function App() {
       </div>
     </Router>
   );
-}
-
-function Dashboard(props) {
-  return <h2>Dashboard</h2>;
 }
 
 function UrlList() {
