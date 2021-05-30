@@ -7,6 +7,8 @@ import {
 } from "react-router-dom";
 
 import Navbar from './components/base/Navbar';
+import HomePage from './components/home/HomePage';
+import UrlCreatePage from './components/url/create/UrlCreatePage';
 
 import './App.css';
 
@@ -23,7 +25,7 @@ function App() {
             <UrlList />
           </Route>
           <Route path="/url/create">
-            <UrlCreate />
+            <UrlCreatePage />
           </Route>
           <Route path="/url/edit/:id">
             <UrlEdit />
@@ -32,16 +34,12 @@ function App() {
             <UrlView />
           </Route>
           <Route path="/">
-            <Home />
+            <HomePage />
           </Route>
         </Switch>
       </div>
     </Router>
   );
-}
-
-function Home() {
-  return <h2>Home</h2>;
 }
 
 function Dashboard(props) {
@@ -50,10 +48,6 @@ function Dashboard(props) {
 
 function UrlList() {
   return <h2>UrlList</h2>;
-}
-
-function UrlCreate() {
-  return <h2>UrlCreate</h2>;
 }
 
 function UrlEdit() {
