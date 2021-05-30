@@ -7,37 +7,35 @@ const MetricHeader = () => {
 
     const metrics = [
         {
-            title: "URL created",
+            title: "URLs created",
             figure: 6,
             legend: "Since always",
         },
         {
-            title: "URL created",
-            figure: 6,
+            title: "URLs active",
+            figure: 4,
             legend: "Since always",
         },
         {
-            title: "URL created",
-            figure: 6,
-            legend: "Since always",
+            title: "Clicks received",
+            figure: 243,
+            legend: "On all your URLs",
         },
         {
-            title: "URL created",
-            figure: 6,
-            legend: "Since always",
+            title: "Clicks received",
+            figure: 14,
+            legend: "On your last URL",
         },
     ]
 
     return (
-        <Widget className="row-widget">
-            <div className="dashboard-metric-header">
-                {metrics.map(({ title, figure, legend }) => (
-                    <MetricBox
-                        title={title}
-                        figure={figure}
-                        legend={legend} />
-                    ))}
-            </div>
+        <Widget bodyClassName="row-widget dashboard-metric-header">
+            {metrics.map(({ title, figure, legend }) => (
+                <MetricBox
+                    title={title}
+                    figure={figure}
+                    legend={legend} />
+                ))}
         </Widget>
     );
 }

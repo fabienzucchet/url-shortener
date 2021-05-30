@@ -183,4 +183,20 @@ img.welcome-photo{
 div.dashboard-metric-header {
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
+}
+
+div.dashboard-body {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    
+}
+
+.dashboard-actions-menu{
+    flex-grow: 1
+}
+
+.overall-histogram{
+    flex-grow: 4;
 }

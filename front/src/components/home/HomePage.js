@@ -8,14 +8,12 @@ import WelcomeMessage from './WelcomeMessage';
 const HomePage = () => {
 
     return (
-        <Page isCentered={true}>
-            <div className="centered-column-page">
-                <div className="welcome">
-                    <WelcomeMessage />
-                </div>
-                <div className="prompt">
-                    <ShortenPrompt />
-                </div>
+        <Page isCentered={true} bodyClassName="centered-column-page">
+            <div className="welcome">
+                <WelcomeMessage />
+            </div>
+            <div className="prompt">
+                <ShortenPrompt />
             </div>
         </Page>
     );
