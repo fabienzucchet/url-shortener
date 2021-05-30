@@ -60,6 +60,7 @@ div.widget {
     border-radius: 3px;
     background-color: #FFF;
     margin: 1em;
+    margin-bottom: 0;
 }
 
 h1.widget-title {
