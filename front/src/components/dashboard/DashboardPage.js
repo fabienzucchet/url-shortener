@@ -4,6 +4,7 @@ import Page from '../base/Page';
 import Widget from '../base/Widget';
 
 import MetricHeader from './MetricHeader';
+import OverallChart from './OverallChart';
 
 const DashboardPage = () => {
 
@@ -12,10 +13,13 @@ const DashboardPage = () => {
             <MetricHeader />
             <div className="dashboard-body">
                 <Widget title="Actions" className="dashboard-actions-menu" bodyClassName="column-widget">
-                    Blabla <br />Blabla <br />Blabla <br />Blabla <br />Blabla <br />
+                    <a className="dashboard-action" href="/" onClick={() => { console.log("Click") }}>Back to Home page</a>
+                    <a className="dashboard-action" href="/url/list" onClick={() => { console.log("Click") }}>See all your URL</a>
+                    <a className="dashboard-action" href="/url/create" onClick={() => { console.log("Click") }}>Create a new URL</a>
+                    <a className="dashboard-action" href="/url/edit" onClick={() => { console.log("Click") }}>Edit an URL</a>
                 </Widget>
-                <Widget title="Your statistics" className="overall-histogram">
-                    Ici un histogramme bientôt
+                <Widget title="Overall statistics" className="overall-chart-container">
+                    <OverallChart />
                 </Widget>
             </div>
         </Page>

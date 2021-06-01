@@ -30,8 +30,9 @@ const MetricHeader = () => {
 
     return (
         <Widget bodyClassName="row-widget dashboard-metric-header">
-            {metrics.map(({ title, figure, legend }) => (
+            {metrics.map(({ title, figure, legend }, idx) => (
                 <MetricBox
+                    key={idx}
                     title={title}
                     figure={figure}
                     legend={legend} />

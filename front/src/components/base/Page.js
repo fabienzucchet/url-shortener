@@ -15,7 +15,7 @@ const Page = (props: Props) => {
     return (
         <div className={`page ${isCentered ? "page-center" : "page-stretch"}`}>
             {title && <h1 className="page-title ">{title}</h1>}
-            <div className={`${bodyClassName}`}>
+            <div className={`${bodyClassName ? bodyClassName : ""}`}>
                 {children}
             </div>
         </div>

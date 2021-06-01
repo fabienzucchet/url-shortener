@@ -11,9 +11,9 @@ const Widget = (props: Props) => {
     const { title, children, className, bodyClassName } = props;
 
     return (
-        <div className={`widget ${className}`}>
+        <div className={`widget ${className ? className : ""}`}>
             {title && <h1 className="widget-title">{title}</h1>}
-            <div className={`widget-body ${bodyClassName}`}>
+            <div className={`widget-body ${bodyClassName ? bodyClassName : ""}`}>
                 {children}
             </div>
         </div>
