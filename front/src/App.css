@@ -37,9 +37,14 @@ body {
     align-items: center;
 }
 
+.centered-column-page{
+    min-width: 60%;
+}
+
 h1.page-title{
     margin: 0.5em;
     margin-bottom: 0;
+    align-self: flex-start;
 }
 
 .navbar-pages{
@@ -244,4 +249,45 @@ a.dashboard-action{
 
 a.dashboard-action:last-child{
     border: 0;
+}
+
+.form-center{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-item-center{
+    flex-grow: 1;
+    padding: 0.2em 0.5em;
+    margin: 0.2em 2em;
+    border-width: 0;
+    border-bottom: 1px solid #1C3040;
+}
+
+.form-item-center-shorturl{
+    flex-grow: 1;
+    margin: 0.2em 2em;
+    display: flex
+}
+
+input.form-item{
+    flex-grow: 1;
+    border-width: 0;
+    border-bottom: 1px solid #1C3040;
+    padding: 0.2em;
+}
+
+span.form-item{
+    color: #2B4861;
+}
+
+.submit-button{
+    padding: 0.5em 2em;
+    color: #FFF;
+    background-color: #1C3040;
+    border: 1px solid #1C3040;
+    border-radius: 3px;
+    font-weight: bold;
 }
