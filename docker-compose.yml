@@ -21,6 +21,9 @@ services:
       - 3000:3000
     depends_on:
       - back
+    environment:
+      REACT_APP_BACKEND_URL: "http://localhost:8000"
+      REACT_APP_HOSTNAME: "http://localhost:3000"
     restart: always
   api:
     build:
@@ -38,14 +41,15 @@ services:
       DB_NAME: postgres
       DB_HOST: url-shortener_db_1
       DB_PASSWORD: changeme
+      FRONT_URL: "http://localhost:3000"
       JWT_SECRET_KEY: changemeeeeee
       OAUTH_SERVER: https://auth.viarezo.fr
       OAUTH_AUTHORIZATION_URL: /oauth/authorize
       OAUTH_TOKEN_URL: /oauth/token
       OAUTH_USERINFO_URL: /api/user/show/me
       OAUTH_REDIRECT_URI: http://localhost:8000/auth/login
-      OAUTH_CLIENT_ID: change
-      OAUTH_CLIENT_SECRET: change
+      OAUTH_CLIENT_ID: changeme
+      OAUTH_CLIENT_SECRET: changeme
       OAUTH_SCOPE: default
       TZ: Europe/Paris
     restart: always
