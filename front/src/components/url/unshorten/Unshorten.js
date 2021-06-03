@@ -9,13 +9,17 @@ import ShortUrlNotFound from './ShortUrlNotFound';
 const Unshorten = () => {
     const { shortUrl } = useParams();
 
+    const REACT_APP_BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+
     const user = useGetUser();
 
+    console.log(shortUrl + REACT_APP_BACKEND_URL);
+
     useEffect(() => {
-        axios.get(`http://localhost:8000/?username=${user.name ? user.name : "guest"}&short_url=http://localhost:3000/${shortUrl}`)
+        axios.get(`${REACT_APP_BACKEND_URL}/?username=${user.name ? user.name : "guest"}&short_url=${shortUrl}`)
         .then(res => {
             if (res.status === 200) {
-                window.location.replace(res.data.original_url);
+                window.location.href = res.data.original_url;
                 return null;
             }
         });
