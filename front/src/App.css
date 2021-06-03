@@ -358,17 +358,17 @@ input.searchbar{
   padding: 1em;
 }
 
-.rowSelected {
+td.rowSelected {
     background-color: #f3fafe;
     border-top: 1px solid #45a0c5;
     border-bottom: 1px solid #45a0c5;
 }
 
-.leftCell {
+td.leftCell {
     border-left: 1px solid #45a0c5;
 }
 
-.rightCell {
+td.rightCell {
     border-right: 1px solid #45a0c5;
 }
 
