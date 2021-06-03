@@ -8,7 +8,6 @@ const UrlCreatePage = () => {
     const [longUrl, setLongUrl] = useState('');
     const [shortUrl, setShortUrl] = useState('');
     const [name, setName] = useState('');
-    const [description, setDescription] = useState('');
 
     return (
         <Page isCentered={true} bodyClassName="centered-column-page" title="Shorten an URL">
@@ -23,9 +22,6 @@ const UrlCreatePage = () => {
             </Widget>
             <Widget title="(Optional) Enter a name for the URL" bodyClassName="form-center">
                 <input type="text" placeholder="URL name" value={name} onChange={ev => setName(ev.target.value)} className="form-item-center"/>
-            </Widget>
-            <Widget title="(Optional) Add a description for the URL" bodyClassName="form-center">
-                <input type="text" placeholder={"Description of the URL"} value={description} onChange={ev => setDescription(ev.target.value)} className="form-item-center"/>
             </Widget>
             <Widget title="Save changes" bodyClassName="form-center">
                 <button className="submit-button">Save changes</button>
