@@ -1,5 +1,8 @@
 import React from 'react';
 
+import Page from '../../base/Page';
+import Widget from '../../base/Widget';
+
 type Props = {
     shortUrl: string
 }
@@ -9,7 +12,13 @@ const ShortUrlNotFound = (props: Props) => {
     const { shortUrl } = props;
 
     return (
-        <h1>Short URL {shortUrl} does not exist !</h1>
+        <Page isCentered={true} bodyClassName="centered-column-page">
+            <Widget title="Woooops" bodyClassName="row-widget">
+                <span className="text-in-widget">
+                    The short URL <span className="text-url">https://localhost:3000/{shortUrl}</span> is not yet (or no longer) registered. Do you want to <a href="/url/create" className="text-url">register</a> it?
+                </span>
+            </Widget>
+        </Page>
     );
 }
 

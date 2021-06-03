@@ -291,3 +291,13 @@ span.form-item{
     border-radius: 3px;
     font-weight: bold;
 }
+
+.text-url{
+    color: #2B4861;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+span.text-in-widget{
+    padding: 1em;
+}
