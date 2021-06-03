@@ -26,8 +26,9 @@ def get_stats_url(q: query_api, _start: datetime.timedelta, _every: datetime.tim
     return tables
 
 
-def new_access_url(w: write_api, url_id: int, metadata: RequestMetadata, bucket: str = bucket):
+def new_access_url(w: write_api, url_id: int, username: str, metadata: RequestMetadata, bucket: str = bucket):
     _point = Point("access_urls") \
+        .tag("user", username) \
         .tag("url_id", url_id) \
         .field("referer", metadata.referer) \
         .field("browser", metadata.browser) \
