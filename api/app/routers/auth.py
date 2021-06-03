@@ -76,7 +76,7 @@ async def login(code: Optional[str] = None, state: Optional[str] = None, db: Ses
 
 @router.get("/logout")
 async def logout():
-    response = RedirectResponse('/example')
+    response = RedirectResponse('/')
     response.delete_cookie("session")
 
     return response
