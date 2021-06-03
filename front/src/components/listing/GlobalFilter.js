@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useAsyncDebounce } from 'react-table';
 
 function GlobalFilter({ preGlobalFilteredRows, globalFilter, setGlobalFilter }) {
-  const [value, setValue] = React.useState(globalFilter)
+  const [value, setValue] = useState(globalFilter)
   const onChange = useAsyncDebounce(value => {
     setGlobalFilter(value || undefined)
   }, 200)

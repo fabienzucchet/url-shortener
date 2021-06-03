@@ -300,7 +300,6 @@ span.form-item{
     font-weight: bold;
 }
 
-<<<<<<< HEAD
 .text-url{
     color: #2B4861;
     font-weight: bold;
@@ -309,7 +308,8 @@ span.form-item{
 
 span.text-in-widget{
     padding: 1em;
-=======
+}
+
 .url-actions {
   margin: 10px;
   padding: 1.1em;
@@ -378,5 +378,4 @@ button.active {
 
 button.delete {
     border: 1px solid rgb(224, 74, 74);
->>>>>>> 1f6db73 (working url list)
 }

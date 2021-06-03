@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useTable, useSortBy, useFilters, useGlobalFilter, useFlexLayout } from 'react-table';
 import classNames from 'classnames'
 
@@ -9,14 +9,14 @@ import DefaultColumnFilter from './DefaultColumnFilter'
 
 
 const ListUrlsPage = () => {
-  const defaultColumn = React.useMemo(
+  const defaultColumn = useMemo(
     () => ({
       Filter: DefaultColumnFilter,
     }),
     []
   )
 
-  const data = React.useMemo(
+  const data = useMemo(
     () => [
       {
         name: "",
@@ -257,7 +257,7 @@ const ListUrlsPage = () => {
     []
   )
 
-  const columns = React.useMemo(
+  const columns = useMemo(
     () => [
       {
         Header: 'Name',
