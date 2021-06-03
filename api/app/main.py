@@ -5,6 +5,7 @@ from typing import List, Optional
 
 
 from fastapi import FastAPI, Depends, Request, HTTPException, Cookie, Response, status, Header
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
 from sqlalchemy.orm import Session
 
@@ -44,6 +45,20 @@ app = FastAPI(
     openapi_tags=tags_metadata,
 )
 
+# CORS
+origins = [
+    "http://localhost:3000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
 # Include routers
 app.include_router(auth.router)
 app.include_router(url.router)
@@ -60,12 +75,12 @@ async def show_me(user=Depends(get_current_user)):
     return {"user": user}
 
 
-@app.get("/{short_url:path}", response_model=schemas.Url)
-async def get_url_by_short_url(short_url: str, username: str, db: Session = Depends(get_db), tsdb=Depends(get_timeseries_client), ua_string: Optional[str] = Header(None), referer: Optional[str] = Header(None)):
+@app.get("/", response_model=schemas.Url)
+async def get_url_by_short_url(short_url: str, db: Session = Depends(get_db), tsdb=Depends(get_timeseries_client), ua_string: Optional[str] = Header(None), referer: Optional[str] = Header(None)):
+    print(short_url)
     url = crud.get_url_by_short_url(db=db, short_url=short_url)
     if url is None:
-        raise HTTPException(
-            status_code=204, detail="There is no such short URL")
+        return Response(status_code=204)
     request_metadata = RequestMetadata(referer=referer)
     if ua_string is not None:
         user_agent = parse(ua_string)
@@ -75,7 +90,6 @@ async def get_url_by_short_url(short_url: str, username: str, db: Session = Depe
     queries.new_access_url(
         w=tsdb.write_api(write_options=SYNCHRONOUS),
         url_id=url.id,
-        username=username,
         metadata=request_metadata
     )
     return url
