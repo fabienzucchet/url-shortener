@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router";
 import axios from "axios";
 
@@ -11,13 +11,15 @@ const Unshorten = () => {
 
     const user = useGetUser();
 
-    axios.get(`http://localhost:8000/?username=${user.name ? user.name : "guest"}&short_url=http://localhost:3000/${shortUrl}`)
+    useEffect(() => {
+        axios.get(`http://localhost:8000/?username=${user.name ? user.name : "guest"}&short_url=http://localhost:3000/${shortUrl}`)
         .then(res => {
             if (res.status === 200) {
                 window.location.replace(res.data.original_url);
                 return null;
             }
         });
+    });
 
     return <ShortUrlNotFound shortUrl={shortUrl} />
 }
