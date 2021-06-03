@@ -13,8 +13,6 @@ const Unshorten = () => {
 
     const user = useGetUser();
 
-    console.log(shortUrl + REACT_APP_BACKEND_URL);
-
     useEffect(() => {
         axios.get(`${REACT_APP_BACKEND_URL}/?username=${user.name ? user.name : "guest"}&short_url=${shortUrl}`)
         .then(res => {
