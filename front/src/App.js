@@ -10,6 +10,7 @@ import Navbar from './components/base/Navbar';
 import HomePage from './components/home/HomePage';
 import DashboardPage from './components/dashboard/DashboardPage';
 import UrlCreatePage from './components/url/create/UrlCreatePage';
+import Unshorten from './components/url/unshorten/Unshorten';
 
 import './App.css';
 
@@ -19,23 +20,26 @@ function App() {
       <Navbar />
       <div className="main-page">
         <Switch>
-          <Route path="/dashboard">
+          <Route exact path="/dashboard">
             <DashboardPage />
           </Route>
-          <Route path="/url/list">
+          <Route exact path="/url/list">
             <UrlList />
           </Route>
-          <Route path="/url/create">
+          <Route exact path="/url/create">
             <UrlCreatePage />
           </Route>
-          <Route path="/url/edit/:id">
+          <Route exact path="/url/edit/:id">
             <UrlEdit />
           </Route>
-          <Route path="/url/view/:id">
+          <Route exact path="/url/view/:id">
             <UrlView />
           </Route>
-          <Route path="/">
+          <Route exact path="/">
             <HomePage />
+          </Route>
+          <Route path="/:shortUrl" >
+            <Unshorten />
           </Route>
         </Switch>
       </div>

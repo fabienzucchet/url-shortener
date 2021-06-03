@@ -46,7 +46,7 @@ async def login(code: Optional[str] = None, state: Optional[str] = None):
 
         token = jwt.encode({"sub": user_data['login'], "user": user_data}, JWT_SECRET_KEY)
 
-        response = RedirectResponse('http://localhost:3000')
+        response = RedirectResponse(os.getenv("FRONT_URL",'http://localhost:3000'))
         response.set_cookie("session", token)
 
         return response
