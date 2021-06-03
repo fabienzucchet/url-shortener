@@ -1,5 +1,11 @@
-body {
-    background-color: #F2F3F5;
+html {
+  background-color: #F2F3F3;
+}
+
+
+table {
+  border-spacing: 0;
+  border: 1px solid #ededed;
 }
 
 .navbar {
@@ -19,8 +25,9 @@ body {
     width: 100%;
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
+    flex-wrap: scroll;
     align-items: stretch;
+    flex-grow: 1;
 }
 
 .page{
@@ -99,7 +106,7 @@ div.widget {
     border-radius: 3px;
     background-color: #FFF;
     margin: 1em;
-    margin-bottom: 0;
+    margin-bottom: 20px;
 }
 
 h1.widget-title {
@@ -290,4 +297,74 @@ span.form-item{
     border: 1px solid #1C3040;
     border-radius: 3px;
     font-weight: bold;
+}
+
+.url-actions {
+  margin: 10px;
+  padding: 1.1em;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  font-weight: bold;
+  border-radius: 2px;
+}
+
+.list-url {
+  border-collapse: collapse;
+  margin-top: 1em;
+  border: 0px;
+}
+  
+.list-url tr:nth-child(even){background-color: #f9f9f9;}
+  
+.list-url tr:hover {background-color: #f2f2f2;}
+
+.list-url th {
+  text-align: left;
+  background-color: #f0f0f0;
+  color: #555B63;
+}
+
+a {
+  color: #000066;
+  text-decoration: none;
+  white-space: unset;
+  text-align: left;
+}
+
+
+.list-url th, .list-url td {
+  margin: 0;
+  padding: 0.6rem;
+  border-bottom: 0.05rem solid #efefef;
+  overflow: scroll;
+}
+
+input.searchbar{
+  flex-grow: 5;
+  border-radius: 3px;
+  border: 1px solid #1C3040;
+  margin: 10px;
+  padding: 1em;
+}
+
+.rowSelected {
+    background-color: #f3fafe;
+    border-top: 1px solid #45a0c5;
+    border-bottom: 1px solid #45a0c5;
+}
+
+.leftCell {
+    border-left: 1px solid #45a0c5;
+}
+
+.rightCell {
+    border-right: 1px solid #45a0c5;
+}
+
+button.active {
+    border: 1px solid #45a0c5;
+}
+
+button.delete {
+    border: 1px solid rgb(224, 74, 74);
 }
