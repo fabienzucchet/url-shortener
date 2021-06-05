@@ -23,6 +23,7 @@ class Url(Base):
 
     original_url = Column(String, nullable=False)
     short_url = Column(String, unique=True, index=True)
+    name = Column(String)
 
     is_active = Column(Boolean, default=True)
     is_delete = Column(Boolean, default=False)
