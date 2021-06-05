@@ -2,11 +2,17 @@
 import os
 
 from typing import Optional
+from datetime import datetime
 
-from fastapi import APIRouter, Response
+from fastapi import APIRouter, Response, Depends
 from fastapi.responses import RedirectResponse
 from jose import jwt
 from requests_oauthlib import OAuth2Session
+from sqlalchemy.orm import Session
+
+from ..datastores.db import crud
+from ..dependencies import get_db
+from ..datastores.db.schemas import UserCreate
 
 router = APIRouter(prefix="/auth", tags=["login"])
 
@@ -25,7 +31,7 @@ JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
 
 
 @router.get("/login")
-async def login(code: Optional[str] = None, state: Optional[str] = None):
+async def login(code: Optional[str] = None, state: Optional[str] = None, db: Session = Depends(get_db)):
 
     if code is None:
         authorization_url, state = oauth.authorization_url(OAUTH_SERVER + AUTHORIZATION_URL)
@@ -44,6 +50,22 @@ async def login(code: Optional[str] = None, state: Optional[str] = None):
 
         user_data = res.json()
 
+        user = UserCreate(username=user_data['login'], email=user_data['email'], created_at=datetime.now())
+
+        # Register user
+        db_user = crud.get_user(db=db, user=user)
+
+        if db_user is None:
+            crud.create_user(db=db, user=user)
+
+        else:
+            if db_user.username != user_data['login']:
+                crud.update_user_username(db=db, user_id=db_user.id, username=user_data['login'])
+
+            if db_user.email != user_data['email']:
+                crud.update_user_email(db=db, user_id=db_user.id, email=user_data['email'])
+
+        # JWT login
         token = jwt.encode({"sub": user_data['login'], "user": user_data}, JWT_SECRET_KEY)
 
         response = RedirectResponse(os.getenv("FRONT_URL",'http://localhost:3000'))
@@ -54,7 +76,7 @@ async def login(code: Optional[str] = None, state: Optional[str] = None):
 
 @router.get("/logout")
 async def logout():
-    response = RedirectResponse('/example')
+    response = RedirectResponse('/')
     response.delete_cookie("session")
 
     return response
