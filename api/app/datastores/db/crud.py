@@ -48,6 +48,19 @@ def get_user_urls(db: Session, username: str):
 def get_user(db: Session, user: schemas.UserCreate):
     return db.query(models.User).filter(or_(models.User.username == user.username, models.User.email == user.email)).first()
 
+def update_user_username(db: Session, user_id: int, username: str):
+    db_user = (db.query(models.User).filter(models.User.id == user_id).first())
+    db_user.username = username
+    db.commit()
+    db.refresh(db_user)
+    return db_user
+
+def update_user_email(db: Session, user_id: int, email: str):
+    db_user = (db.query(models.User).filter(models.User.id == user_id).first())
+    db_user.email = email
+    db.commit()
+    db.refresh(db_user)
+    return db_user
 
 def create_user(db: Session, user: schemas.UserCreate):
     db_user = models.User(email=user.email, username=user.username)
