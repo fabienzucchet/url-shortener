@@ -10,8 +10,10 @@ import { useGetUser } from '../../hooks/useGetUser';
 
 import Widget from '../base/Widget';
 
-import GlobalFilter from './GlobalFilter'
-import DefaultColumnFilter from './DefaultColumnFilter'
+import GlobalFilter from './GlobalFilter';
+import DefaultColumnFilter from './DefaultColumnFilter';
+
+import DeletePopup from './DeletePopup';
 
 
 const ListUrlsPage = () => {
@@ -24,7 +26,7 @@ const ListUrlsPage = () => {
     async function fetchUrls() {
       const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/url/`, {
         params: {
-          username: user.login
+          username: user.login // TODO : REMOVE IT AS IT WONT BE USEFUL AFTER MERGING #8
         }
       });
       console.log(response)
@@ -72,7 +74,7 @@ const ListUrlsPage = () => {
       {
         Header: 'Last Update',
         accessor: 'updated_at',
-        Cell: e => <span>{e.value == null ? "Not updated yet" : e.value}</span>
+        Cell: e => <span>{e.value == null ? "Not updated yet" : format(Date.parse(e.value), 'yyyy/MM/dd HH:mm')}</span>
       },
       {
         Header: 'Active',
@@ -105,7 +107,8 @@ const ListUrlsPage = () => {
     useFlexLayout,
   );
 
-  const [rowSelected, setrowSelected] = useState(-1);
+  const [rowSelected, setRowSelected] = useState(-1);
+  const [urlSelected, setUrlSelected] = useState({});
 
   return (
     <Widget title={"URLs Registered (" + data.length + ")"} className="column-widget">
@@ -116,18 +119,18 @@ const ListUrlsPage = () => {
           setGlobalFilter={setGlobalFilter}
         />
         <span>
-          <button className={classNames({
-            "url-actions": true,
-            "active": rowSelected !== -1
-          })}>View details</button>
-          <button className={classNames({
-            "url-actions": true,
-            "active": rowSelected !== -1
-          })}>Edit</button>
-          <button className={classNames({
-            "url-actions": true,
-            "delete": rowSelected !== -1
-          })}>Delete</button>
+          <button onClick={() => { if (rowSelected !== -1) { history.push(`/url/view/${rowSelected}`) } }}
+            className={classNames({
+              "url-actions": true,
+              "active": rowSelected !== -1
+            })}>View details</button>
+          <button onClick={() => { if (rowSelected !== -1) { history.push(`/url/edit/${rowSelected}`) } }}
+            className={classNames({
+              "url-actions": true,
+              "active": rowSelected !== -1
+            })}>Edit</button>
+
+          <DeletePopup urlSelected={urlSelected} rowSelected={rowSelected} />
           <button className="url-actions" id="shorten-button" onClick={() => { history.push('/url/create') }}>Shorten an URL</button>
         </span>
       </div>
@@ -154,11 +157,11 @@ const ListUrlsPage = () => {
                   {row.cells.map(cell => {
                     return (
                       <td {...cell.getCellProps()}
-                        onClick={() => { rowSelected === row.id ? setrowSelected(-1) : setrowSelected(row.id) }}
+                        onClick={() => { rowSelected === row.original.id ? setRowSelected(-1) : setRowSelected(row.original.id); setUrlSelected(row) }}
                         className={classNames({
-                          "rowSelected": row.id === rowSelected,
-                          "rightCell": cell.column.Header === "Active" && row.id === rowSelected,
-                          "leftCell": cell.column.Header === "Name" && row.id === rowSelected
+                          "rowSelected": row.original.id === rowSelected,
+                          "rightCell": cell.column.Header === "Active" && row.original.id === rowSelected,
+                          "leftCell": cell.column.Header === "Name" && row.original.id === rowSelected
                         })}>
                         { cell.render('Cell')}
                       </td>

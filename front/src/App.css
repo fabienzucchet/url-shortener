@@ -376,10 +376,12 @@ td.rightCell {
 
 button.active {
     border: 1px solid #45a0c5;
+    cursor: pointer;
 }
 
 button.delete {
     border: 1px solid rgb(224, 74, 74);
+    cursor: pointer;
 }
 
 #shorten-button {
@@ -393,3 +395,54 @@ button.delete {
   flex-direction: row;
   justify-content: space-between;
 }
+
+
+
+
+
+
+.popup-overlay {
+    background-color: #00000036;
+}
+
+.popup-content {
+    background-color: white;
+    padding: 10px;
+    border: 1px solid #747474;
+    border-radius: 4px;
+}
+
+  /*
+  card 
+  */
+  .card {
+    font-size: 12px;
+  }
+  .card > .header {
+    width: 100%;
+    font-size: 14px;
+    text-align: center;
+  }
+  
+  .modal {
+    font-size: 12px;
+  }
+  .modal > .header {
+    width: 100%;
+    font-size: 18px;
+    text-align: center;
+    padding: 5px;
+  }
+  .modal > .content {
+    width: 100%;
+    padding: 10px 5px;
+  }
+  .modal > .actions {
+    margin: auto;
+  }
+  .modal > .actions {
+    width: 100%;
+    padding: 10px 5px;
+    text-align: center;
+  }
+  

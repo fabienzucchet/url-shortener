@@ -33,7 +33,7 @@ async def put_url(url: schemas.UrlCreate, db: Session = Depends(get_db)):
     return crud.put_url(db=db, url=url)
 
 
-@router.get("/id/{url_id}", response_model=EnrichedUrl)
+@router.get("/stats/{url_id}", response_model=EnrichedUrl)
 async def get_url_by_id(url_id: int, db: Session = Depends(get_db), tsdb=Depends(get_timeseries_client), start: int = -60, step: int = 5):
     resp = crud.get_url_by_id(db=db, url_id=url_id)
     stats = []
