@@ -38,13 +38,13 @@ class UserBase(BaseModel):
     username: str
     email: str
 
-    created_at: datetime.datetime
-    updated_at: Optional[datetime.datetime] = None
-
 
 class User(UserBase):
     id: int
     urls: List[Url] = []
+
+    created_at: datetime.datetime
+    updated_at: Optional[datetime.datetime] = None
 
     class Config:
         orm_mode = True
