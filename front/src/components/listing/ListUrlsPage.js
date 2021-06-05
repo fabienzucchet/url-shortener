@@ -1,6 +1,12 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useTable, useSortBy, useFilters, useGlobalFilter, useFlexLayout } from 'react-table';
 import classNames from 'classnames'
+import { format } from 'date-fns'
+import { useHistory } from "react-router-dom";
+
+
+import axios from 'axios';
+import { useGetUser } from '../../hooks/useGetUser';
 
 import Widget from '../base/Widget';
 
@@ -9,6 +15,24 @@ import DefaultColumnFilter from './DefaultColumnFilter'
 
 
 const ListUrlsPage = () => {
+  const [urls, setUrls] = useState([])
+  const user = useGetUser();
+  const history = useHistory();
+
+
+  useEffect(() => {
+    async function fetchUrls() {
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/url/`, {
+        params: {
+          username: user.login
+        }
+      });
+      console.log(response)
+      setUrls(response.data)
+    }
+    fetchUrls();
+  }, [user.login])
+
   const defaultColumn = useMemo(
     () => ({
       Filter: DefaultColumnFilter,
@@ -17,244 +41,8 @@ const ListUrlsPage = () => {
   )
 
   const data = useMemo(
-    () => [
-      {
-        name: "",
-        id: 1,
-        description: "",
-        short_url: "http://tt",
-        url: "http://google.fr/ihihiuhi",
-        created_at: "2019-09-10 11:01",
-        updated_at: "2019-09-10 12:01",
-        is_active: "true",
-        is_delete: "false",
-        clics: 20
-      },
-      {
-        name: "Test URL",
-        id: 2,
-        description: "",
-        short_url: "http://test",
-        url: "http://amazon.fr/objecthiuhreiuhriu,reuinheriuheriuheuinheiuhnreiuehiurhiuzheiuzhiuezhniuhezhiuzneiuzheiuznshiuezgyugzebuygezyug1",
-        created_at: "2020-09-10 12:01",
-        updated_at: "2019-09-10 12:01",
-        is_active: "false",
-        is_delete: "false",
-        clics: 30
-      },
-      {
-        name: "",
-        id: 3,
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ultricies placerat lorem sit amet bibendum. Fusce eget urna nulla. Suspendisse.",
-        short_url: "http://ll",
-        url: "http://userpro.az",
-        created_at: "2019-09-11 13:01",
-        updated_at: "2019-09-11 12:01",
-        is_active: "true",
-        is_delete: "false",
-        clics: 10920
-      },
-      {
-        name: "",
-        id: 4,
-        description: "",
-        short_url: "http://cc",
-        url: "http://mm",
-        created_at: "2017-09-10 14:01",
-        updated_at: "2019-09-10 12:01",
-        is_active: "true",
-        is_delete: "true",
-        clics: 109821
-      },
-      {
-        name: "",
-        id: 4,
-        description: "",
-        short_url: "http://cc",
-        url: "http://mm",
-        created_at: "2017-09-10 14:01",
-        updated_at: "2019-09-10 12:01",
-        is_active: "true",
-        is_delete: "true",
-        clics: 109821
-      },
-      {
-        name: "",
-        id: 4,
-        description: "",
-        short_url: "http://cc",
-        url: "http://mm",
-        created_at: "2017-09-10 14:01",
-        updated_at: "2019-09-10 12:01",
-        is_active: "true",
-        is_delete: "true",
-        clics: 109821
-      },
-      {
-        name: "",
-        id: 4,
-        description: "",
-        short_url: "http://cc",
-        url: "http://mm",
-        created_at: "2017-09-10 14:01",
-        updated_at: "2019-09-10 12:01",
-        is_active: "true",
-        is_delete: "true",
-        clics: 109821
-      },
-      {
-        name: "",
-        id: 4,
-        description: "",
-        short_url: "http://cc",
-        url: "http://mm",
-        created_at: "2017-09-10 14:01",
-        updated_at: "2019-09-10 12:01",
-        is_active: "true",
-        is_delete: "true",
-        clics: 109821
-      },
-      {
-        name: "",
-        id: 4,
-        description: "",
-        short_url: "http://cc",
-        url: "http://mm",
-        created_at: "2017-09-10 14:01",
-        updated_at: "2019-09-10 12:01",
-        is_active: "true",
-        is_delete: "true",
-        clics: 109821
-      },
-      {
-        name: "",
-        id: 4,
-        description: "",
-        short_url: "http://cc",
-        url: "http://mm",
-        created_at: "2017-09-10 14:01",
-        updated_at: "2019-09-10 12:01",
-        is_active: "true",
-        is_delete: "true",
-        clics: 109821
-      },
-      {
-        name: "",
-        id: 4,
-        description: "",
-        short_url: "http://cc",
-        url: "http://mm",
-        created_at: "2017-09-10 14:01",
-        updated_at: "2019-09-10 12:01",
-        is_active: "true",
-        is_delete: "true",
-        clics: 109821
-      },
-      {
-        name: "",
-        id: 4,
-        description: "",
-        short_url: "http://cc",
-        url: "http://mm",
-        created_at: "2017-09-10 14:01",
-        updated_at: "2019-09-10 12:01",
-        is_active: "true",
-        is_delete: "true",
-        clics: 109821
-      },
-      {
-        name: "",
-        id: 4,
-        description: "",
-        short_url: "http://cc",
-        url: "http://mm",
-        created_at: "2017-09-10 14:01",
-        updated_at: "2019-09-10 12:01",
-        is_active: "true",
-        is_delete: "true",
-        clics: 109821
-      },
-      {
-        name: "",
-        id: 4,
-        description: "",
-        short_url: "http://cc",
-        url: "http://mm",
-        created_at: "2017-09-10 14:01",
-        updated_at: "2019-09-10 12:01",
-        is_active: "true",
-        is_delete: "true",
-        clics: 109821
-      },
-      {
-        name: "",
-        id: 4,
-        description: "",
-        short_url: "http://cc",
-        url: "http://mm",
-        created_at: "2017-09-10 14:01",
-        updated_at: "2019-09-10 12:01",
-        is_active: "true",
-        is_delete: "true",
-        clics: 109821
-      }, {
-        name: "",
-        id: 4,
-        description: "",
-        short_url: "http://cc",
-        url: "http://mm",
-        created_at: "2017-09-10 14:01",
-        updated_at: "2019-09-10 12:01",
-        is_active: "true",
-        is_delete: "true",
-        clics: 109821
-      }, {
-        name: "",
-        id: 4,
-        description: "",
-        short_url: "http://cc",
-        url: "http://mm",
-        created_at: "2017-09-10 14:01",
-        updated_at: "2019-09-10 12:01",
-        is_active: "true",
-        is_delete: "true",
-        clics: 109821
-      }, {
-        name: "",
-        id: 4,
-        description: "",
-        short_url: "http://cc",
-        url: "http://mm",
-        created_at: "2017-09-10 14:01",
-        updated_at: "2019-09-10 12:01",
-        is_active: "true",
-        is_delete: "true",
-        clics: 109821
-      }, {
-        name: "",
-        id: 4,
-        description: "",
-        short_url: "http://cc",
-        url: "http://mm",
-        created_at: "2017-09-10 14:01",
-        updated_at: "2019-09-10 12:01",
-        is_active: "true",
-        is_delete: "true",
-        clics: 109821
-      }, {
-        name: "",
-        id: 4,
-        description: "",
-        short_url: "http://cc",
-        url: "http://mm",
-        created_at: "2017-09-10 14:01",
-        updated_at: "2019-09-10 12:01",
-        is_active: "true",
-        is_delete: "true",
-        clics: 109821
-      },
-    ],
-    []
+    () => urls,
+    [urls]
   )
 
   const columns = useMemo(
@@ -267,34 +55,31 @@ const ListUrlsPage = () => {
       {
         Header: 'URL',
         accessor: 'short_url',
-        Cell: e => <a href={e.value}> {e.value}</a>,
+        Cell: e => <a href={process.env.REACT_APP_HOSTNAME + "/" + e.value}>{e.value}</a>,
         width: 100
       },
       {
         Header: 'Original URL',
-        accessor: 'url',
+        accessor: 'original_url',
         Cell: e => <a href={e.value} style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}> {e.value}</a>,
         width: 130
       },
       {
-        Header: 'Clics',
-        accessor: 'clics',
-        width: 75
-      },
-      {
         Header: 'Created At',
         accessor: 'created_at',
+        Cell: e => <span>{format(Date.parse(e.value), 'yyyy/MM/dd HH:mm')}</span>
       },
       {
         Header: 'Last Update',
         accessor: 'updated_at',
+        Cell: e => <span>{e.value == null ? "Not updated yet" : e.value}</span>
       },
       {
         Header: 'Active',
         accessor: 'is_active',
         maxWidth: 50,
         minWidth: 50,
-        Cell: e => <span style={e.value === "true" ? { color: '#669900' } : { color: '#cc3300' }}>{e.value}</span>,
+        Cell: e => <span style={e.value.toString() === "true" ? { color: '#669900' } : { color: '#cc3300' }}>{e.value.toString()}</span>,
       },
     ],
     []
@@ -343,7 +128,7 @@ const ListUrlsPage = () => {
             "url-actions": true,
             "delete": rowSelected !== -1
           })}>Delete</button>
-          <button className="url-actions" id="shorten-button">Shorten an URL</button>
+          <button className="url-actions" id="shorten-button" onClick={() => { history.push('/url/create') }}>Shorten an URL</button>
         </span>
       </div>
 
