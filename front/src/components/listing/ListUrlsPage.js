@@ -324,14 +324,13 @@ const ListUrlsPage = () => {
 
   return (
     <Widget title={"URLs Registered (" + data.length + ")"} className="column-widget">
-      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+      <div className="list-url-header">
         <GlobalFilter
           preGlobalFilteredRows={preGlobalFilteredRows}
           globalFilter={state.globalFilter}
           setGlobalFilter={setGlobalFilter}
-          style={{ display: 'flex', flexDirection: 'row' }}
         />
-        <span style={{ display: 'flex', alignSelf: 'center' }}>
+        <span>
           <button className={classNames({
             "url-actions": true,
             "active": rowSelected !== -1
@@ -344,12 +343,12 @@ const ListUrlsPage = () => {
             "url-actions": true,
             "delete": rowSelected !== -1
           })}>Delete</button>
-          <button className="url-actions" style={{ backgroundColor: '#1C3040', color: 'white', border: '0' }}>Shorten an URL</button>
+          <button className="url-actions" id="shorten-button">Shorten an URL</button>
         </span>
       </div>
 
       <div>
-        <table {...getTableProps()} style={{ display: "flex", flexDirection: 'column' }} className="list-url">
+        <table {...getTableProps()} className="list-url">
           <thead>
             {headerGroups.map(headerGroup => (
               <tr {...headerGroup.getHeaderGroupProps()}>
