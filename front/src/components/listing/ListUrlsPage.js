@@ -17,7 +17,13 @@ import DeletePopup from './DeletePopup';
 
 
 const ListUrlsPage = () => {
-  const [urls, setUrls] = useState([])
+  const [urls, setUrls] = useState([]);
+  const [counter, setCounter] = useState(0);
+
+  const refreshList = () => {
+    setCounter(counter + 1);
+  }
+
   const user = useGetUser();
   const history = useHistory();
 
@@ -33,7 +39,7 @@ const ListUrlsPage = () => {
       setUrls(response.data)
     }
     fetchUrls();
-  }, [user.login])
+  }, [user.login, counter])
 
   const defaultColumn = useMemo(
     () => ({
@@ -130,7 +136,7 @@ const ListUrlsPage = () => {
               "active": rowSelected !== -1
             })}>Edit</button>
 
-          <DeletePopup urlSelected={urlSelected} rowSelected={rowSelected} />
+          <DeletePopup urlSelected={urlSelected} rowSelected={rowSelected} history={history} refreshList={refreshList} />
           <button className="url-actions" id="shorten-button" onClick={() => { history.push('/url/create') }}>Shorten an URL</button>
         </span>
       </div>

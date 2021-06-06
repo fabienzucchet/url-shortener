@@ -2,6 +2,7 @@ import React from "react";
 import Popup from "reactjs-popup";
 import classNames from 'classnames';
 import axios from 'axios';
+import ReactJson from 'react-json-view';
 //
 
 const contentStyle = {
@@ -30,7 +31,10 @@ const DeletePopup = (props) => {
 						<br />
 						<br />
 						<pre>
-							<code>{JSON.stringify(props.urlSelected.original, null, 1)}</code>
+							<code>{
+								props.urlSelected.original != null ? <ReactJson src={(props.urlSelected.original)} />
+									: {}
+							}</code>
 						</pre>
 					</div>
 					<div className="actions">
@@ -38,6 +42,7 @@ const DeletePopup = (props) => {
 							className="url-actions delete"
 							onClick={() => {
 								axios.delete(`${process.env.REACT_APP_BACKEND_URL}/url/${props.rowSelected}`);
+								props.refreshList();
 								close();
 							}}>
 							Delete the URL
