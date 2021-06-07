@@ -27,11 +27,11 @@ async def get_my_urls(db: Session = Depends(get_db), user=Depends(get_current_us
 
 
 @router.put("/", response_model=schemas.Url, status_code=status.HTTP_201_CREATED)
-async def put_url(url: schemas.UrlCreate, db: Session = Depends(get_db), user=Depends(get_current_user)):
+async def put_url(url: schemas.UrlBase, db: Session = Depends(get_db), user=Depends(get_current_user)):
     if crud.get_url_by_short_url(db=db, short_url=url.short_url):
         raise HTTPException(
             status_code=400, detail="Short url already registered")
-    url.owner_username = user["login"]
+    url = schemas.UrlCreate(**url.dict(), owner_username=user["login"])
     return crud.put_url(db=db, url=url)
 
 

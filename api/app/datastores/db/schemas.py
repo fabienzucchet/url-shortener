@@ -13,7 +13,6 @@ class UrlBase(BaseModel):
     original_url: AnyUrl
     short_url: Optional[str] = None
     name: Optional[str] = None
-    owner_username: str
 
 
 class Url(UrlBase):
@@ -29,7 +28,7 @@ class Url(UrlBase):
 
 
 class UrlCreate(UrlBase):
-    pass
+    owner_username: str
 
 #### Users ####
 
