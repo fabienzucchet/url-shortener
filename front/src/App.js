@@ -12,6 +12,7 @@ import DashboardPage from './components/dashboard/DashboardPage';
 import ListUrlsPage from './components/listing/ListUrlsPage'
 import UrlCreatePage from './components/url/create/UrlCreatePage';
 import Unshorten from './components/url/unshorten/Unshorten';
+import ViewPage from './components/url/view/ViewPage';
 
 import './App.css';
 
@@ -58,7 +59,7 @@ function UrlEdit() {
 function UrlView() {
   const { id } = useParams();
 
-  return <h2>UrlView {id}</h2>;
+  return <ViewPage id={id} />;
 }
 
 export default App;
