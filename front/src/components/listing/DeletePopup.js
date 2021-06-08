@@ -6,11 +6,14 @@ import ReactJson from 'react-json-view';
 //
 
 const contentStyle = {
-	maxWidth: "600px",
+	maxWidth: "400px",
 	width: "90%"
 };
 
 const DeletePopup = (props) => {
+	if (props.urlSelected.original === undefined) {
+		props.urlSelected.original = { name: "", original_url: "", short_url: "" }
+	}
 	return (
 		<Popup
 			trigger={<button
@@ -27,17 +30,21 @@ const DeletePopup = (props) => {
 					<div className="header"> Deletion Confirmation Required </div>
 					<div className="content">
 						<br />
-							If you continue the following record will be deleted :
+						If you continue the following record will be deleted :
 						<br />
 						<br />
-						<pre>
-							<code>{
-								props.urlSelected.original != null ? <ReactJson src={(props.urlSelected.original)} />
-									: {}
-							}</code>
-						</pre>
+						Name : {props.urlSelected.original.name}
+						<br />
+						Original URL : <a href={props.urlSelected.original.original_url}>{props.urlSelected.original.original_url}</a>
+						<br />
+						Short URL : <a href={process.env.REACT_APP_HOSTNAME + "/" + props.urlSelected.original.short_url}>{process.env.REACT_APP_HOSTNAME + "/" + props.urlSelected.original.short_url}</a>
 					</div>
 					<div className="actions">
+						<button
+							className="url-actions active"
+							onClick={() => { close(); }}>
+							Cancel
+						</button>
 						<button
 							className="url-actions delete"
 							onClick={() => {
@@ -46,11 +53,6 @@ const DeletePopup = (props) => {
 								close();
 							}}>
 							Delete the URL
-						</button>
-						<button
-							className="url-actions active"
-							onClick={() => { close(); }}>
-							Cancel
 						</button>
 					</div>
 				</div>

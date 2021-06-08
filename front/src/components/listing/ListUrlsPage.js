@@ -21,7 +21,10 @@ const ListUrlsPage = () => {
   const [counter, setCounter] = useState(0);
 
   const refreshList = () => {
-    setCounter(counter + 1);
+    const timer = setTimeout(() => {
+      setCounter(counter + 1);
+    }, 500);
+    return () => clearTimeout(timer);
   }
 
   const user = useGetUser();
@@ -35,7 +38,6 @@ const ListUrlsPage = () => {
           username: user.login // TODO : REMOVE IT AS IT WONT BE USEFUL AFTER MERGING #8
         }
       });
-      console.log(response)
       setUrls(response.data)
     }
     fetchUrls();
