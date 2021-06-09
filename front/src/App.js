@@ -24,7 +24,7 @@ function App() {
           <Route exact path="/dashboard">
             <DashboardPage />
           </Route>
-          <Route path="/url/list">
+          <Route exact path="/url/list">
             <ListUrlsPage />
           </Route>
           <Route exact path="/url/create">
