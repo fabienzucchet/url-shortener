@@ -50,6 +50,7 @@ async def login(code: Optional[str] = None, state: Optional[str] = None, db: Ses
 
         user_data = res.json()
 
+
         user = UserCreate(username=user_data['login'], email=user_data['email'])
 
         # Register user

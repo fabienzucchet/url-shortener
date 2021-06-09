@@ -9,6 +9,7 @@ import {
 import Navbar from './components/base/Navbar';
 import HomePage from './components/home/HomePage';
 import DashboardPage from './components/dashboard/DashboardPage';
+import ListUrlsPage from './components/listing/ListUrlsPage'
 import UrlCreatePage from './components/url/create/UrlCreatePage';
 import Unshorten from './components/url/unshorten/Unshorten';
 
@@ -24,7 +25,7 @@ function App() {
             <DashboardPage />
           </Route>
           <Route exact path="/url/list">
-            <UrlList />
+            <ListUrlsPage />
           </Route>
           <Route exact path="/url/create">
             <UrlCreatePage />
@@ -47,14 +48,11 @@ function App() {
   );
 }
 
-function UrlList() {
-  return <h2>UrlList</h2>;
-}
 
 function UrlEdit() {
   const { id } = useParams();
 
-  return <h2>UrlEdit { id }</h2>;
+  return <h2>UrlEdit {id}</h2>;
 }
 
 function UrlView() {
