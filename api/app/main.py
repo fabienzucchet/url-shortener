@@ -1,5 +1,6 @@
 """Main module of Website Monitoring Tool"""
 import os
+import socket
 
 from typing import List, Optional
 
@@ -24,6 +25,9 @@ from .exceptions.RequiresLoginException import RequiresLoginException
 
 from .routers import auth, url, user
 
+# Monitoring - Metrics
+from starlette_exporter import PrometheusMiddleware, handle_metrics
+from .instrumentation.metrics import EXAMPLE
 
 docker = os.getenv("DOCKER")
 
@@ -64,10 +68,27 @@ app.include_router(auth.router)
 app.include_router(url.router)
 app.include_router(user.router)
 
+app.add_middleware(PrometheusMiddleware,
+                   app_name="url_shortener",
+                   group_paths=True,
+                   filter_unhandled_paths=False,
+                   prefix='us'
+                   )
+app.add_route("/metrics", handle_metrics)
+
 
 @app.exception_handler(RequiresLoginException)
 async def exception_handler(request: Request, exc: RequiresLoginException) -> Response:
     return RedirectResponse(url='/auth/login')
+
+
+hostname = socket.gethostname()
+
+
+@app.get('/example')
+async def metrics_example():
+    EXAMPLE.labels(method="get", endpoint="/example", hostname=hostname).inc()
+    return {}
 
 
 @app.get('/me')
