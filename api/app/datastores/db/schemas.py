@@ -30,6 +30,7 @@ class Url(UrlBase):
 class UrlCreate(UrlBase):
     owner_username: str
 
+
 #### Users ####
 
 

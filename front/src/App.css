@@ -323,12 +323,12 @@ span.text-in-widget{
   border-collapse: collapse;
   margin-top: 1em;
   border: 0px;
-  display: flex; 
+  display: flex;
   flex-direction: column;
 }
-  
+
 .list-url tr:nth-child(even){background-color: #f9f9f9;}
-  
+
 .list-url tr:hover {background-color: #f2f2f2;}
 
 .list-url th {
@@ -413,7 +413,7 @@ button.delete {
 }
 
   /*
-  card 
+  card
   */
   .card {
     font-size: 12px;
@@ -423,7 +423,7 @@ button.delete {
     font-size: 14px;
     text-align: center;
   }
-  
+
   .modal {
     font-size: 12px;
   }
@@ -445,4 +445,3 @@ button.delete {
     padding: 10px 5px;
     text-align: center;
   }
-  

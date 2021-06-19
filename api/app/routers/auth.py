@@ -31,10 +31,16 @@ JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
 
 
 @router.get("/login")
-async def login(code: Optional[str] = None, state: Optional[str] = None, db: Session = Depends(get_db)):
+async def login(
+    code: Optional[str] = None,
+    state: Optional[str] = None,
+    db: Session = Depends(get_db),
+):
 
     if code is None:
-        authorization_url, state = oauth.authorization_url(OAUTH_SERVER + AUTHORIZATION_URL)
+        authorization_url, state = oauth.authorization_url(
+            OAUTH_SERVER + AUTHORIZATION_URL
+        )
         return RedirectResponse(authorization_url)
 
     else:
@@ -43,15 +49,14 @@ async def login(code: Optional[str] = None, state: Optional[str] = None, db: Ses
             authorization_response=REDIRECT_URI,
             code=code,
             client_id=CLIENT_ID,
-            client_secret=CLIENT_SECRET
+            client_secret=CLIENT_SECRET,
         )
 
         res = oauth.get(OAUTH_SERVER + USERINFO_URL)
 
         user_data = res.json()
 
-
-        user = UserCreate(username=user_data['login'], email=user_data['email'])
+        user = UserCreate(username=user_data["login"], email=user_data["email"])
 
         # Register user
         db_user = crud.get_user(db=db, user=user)
@@ -60,16 +65,22 @@ async def login(code: Optional[str] = None, state: Optional[str] = None, db: Ses
             crud.create_user(db=db, user=user)
 
         else:
-            if db_user.username != user_data['login']:
-                crud.update_user_username(db=db, user_id=db_user.id, username=user_data['login'])
+            if db_user.username != user_data["login"]:
+                crud.update_user_username(
+                    db=db, user_id=db_user.id, username=user_data["login"]
+                )
 
-            if db_user.email != user_data['email']:
-                crud.update_user_email(db=db, user_id=db_user.id, email=user_data['email'])
+            if db_user.email != user_data["email"]:
+                crud.update_user_email(
+                    db=db, user_id=db_user.id, email=user_data["email"]
+                )
 
         # JWT login
-        token = jwt.encode({"sub": user_data['login'], "user": user_data}, JWT_SECRET_KEY)
+        token = jwt.encode(
+            {"sub": user_data["login"], "user": user_data}, JWT_SECRET_KEY
+        )
 
-        response = RedirectResponse(os.getenv("FRONT_URL",'http://localhost:3000'))
+        response = RedirectResponse(os.getenv("FRONT_URL", "http://localhost:3000"))
         response.set_cookie("session", token)
 
         return response
@@ -77,7 +88,7 @@ async def login(code: Optional[str] = None, state: Optional[str] = None, db: Ses
 
 @router.get("/logout")
 async def logout():
-    response = RedirectResponse('/')
+    response = RedirectResponse("/")
     response.delete_cookie("session")
 
     return response

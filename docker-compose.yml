@@ -43,6 +43,10 @@ services:
       DB_PASSWORD: changeme
       FRONT_URL: "http://localhost:3000"
       JWT_SECRET_KEY: changemeeeeee
+      INFLUX_URL: "http://host.docker.internal:8086"
+      INFLUX_BUCKET: urlshortener
+      INFLUX_TOKEN: aaaa
+      INFLUX_ORG: viarezo
       OAUTH_SERVER: https://auth.viarezo.fr
       OAUTH_AUTHORIZATION_URL: /oauth/authorize
       OAUTH_TOKEN_URL: /oauth/token
