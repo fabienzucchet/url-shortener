@@ -5,15 +5,17 @@ from .database import bucket
 from ..common import RequestMetadata
 
 
-def get_stats_url(q: query_api, _start: datetime.timedelta, _every: datetime.timedelta, url_id: int, bucket: str = bucket):
-    p = {"_start": _start,
-         "_url_id": str(url_id),
-         "_desc": True,
-         "_every": _every
-         }
+def get_stats_url(q: query_api, _start: int, _stop: int, _every: datetime.timedelta, url_id: int, bucket: str = bucket):
+    p = {
+        "_start": _start,
+        "_stop": _stop,
+        "_url_id": str(url_id),
+        "_desc": True,
+        "_every": _every
+    }
 
     query = '''
-    from(bucket:"{}") |> range(start: _start)
+    from(bucket:"{}") |> range(start: _start, stop: _stop)
     |> filter(fn: (r) => r["_measurement"] == "access_urls")
     |> filter(fn: (r) => r["_field"] == "access")
     |> filter(fn: (r) => r["url_id"] == _url_id)

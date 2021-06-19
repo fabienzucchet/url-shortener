@@ -36,7 +36,7 @@ async def put_url(url: schemas.UrlBase, db: Session = Depends(get_db), user=Depe
 
 
 @router.get("/stats/{url_id}", response_model=EnrichedUrl)
-async def get_url_by_id(url_id: int, db: Session = Depends(get_db), tsdb=Depends(get_timeseries_client), start: int = -60, step: int = 5, user=Depends(get_current_user)):
+async def get_url_by_id(url_id: int, start: int, stop: int, step: int, db: Session = Depends(get_db), tsdb=Depends(get_timeseries_client), user=Depends(get_current_user)):
     url = crud.get_url_by_id(db=db, url_id=url_id)
     if url.owner_username != user["login"]:
         raise HTTPException(
@@ -45,8 +45,9 @@ async def get_url_by_id(url_id: int, db: Session = Depends(get_db), tsdb=Depends
     if url is not None:
         stats = queries.get_stats_url(
             q=tsdb.query_api(),
-            _start=datetime.timedelta(minutes=start),
-            _every=datetime.timedelta(minutes=step),
+            _start=start,
+            _stop=stop,
+            _every=datetime.timedelta(seconds=step),
             url_id=url_id
         )
     enriched_url = EnrichedUrl(url=url, stats=stats)
