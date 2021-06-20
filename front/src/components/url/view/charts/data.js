@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import axios from 'axios';
-import { format } from 'date-fns'
+import { format, set } from 'date-fns'
 
-const defaultGraph = [
+const DefaultData = [
   {
     "id": "default",
     "color": "hsl(0, 0%, 0%)",
@@ -35,75 +35,67 @@ const defaultGraph = [
   },
 ];
 
-async function GetData({ queryRange }) {
+const GetData = (queryRange, setData) => {
   console.log("data.js L39 : ", queryRange);
-  if (queryRange === undefined) {
-    queryRange = { id: 1, start: Math.floor(Date.now() / 1000) - 60 * 60, stop: Math.floor(Date.now() / 1000) }
-  }
   const id = queryRange.id;
   const since = queryRange.start;
   const stop = queryRange.stop;
   const step = Math.floor((stop - since) / 10);
 
-  const newData = [];
-  const [data, setData] = useState(defaultGraph);
+  let data = DefaultData;
 
-  useEffect(() => {
-    axios.get(`${process.env.REACT_APP_HOSTNAME}/api/url/stats/${id}`, {
-      params: {
-        start: since,
-        stop: stop,
-        step: step,
-      }
-    }).then((response) => {
-      console.log(response.data)
-      if (response.data.stats.length > 0) {
-        console.log(response.data.stats[0].records);
-        var point;
-        var pointDate;
-        var date = ""
-        var startDate = format(Date.parse(response.data.stats[0].records[0].values._start), 'yyyy/MM/dd');
-        var stopDate = format(Date.parse(response.data.stats[0].records[0].values._stop), 'yyyy/MM/dd');
-        var shouldShowDate = stopDate !== startDate;
-        console.log("should show date : ", shouldShowDate)
-        for (let i = response.data.stats[0].records.length - 1; i >= 0; i--) {
-          date = ""
-          point = response.data.stats[0].records[i].values;
-          pointDate = Date.parse(point._time)
-          if (shouldShowDate) {
-            if (i === 0) {
-              date += format(pointDate, 'yyyy/MM/dd')
-            } else {
-              var previousPointDateStr = format(Date.parse(response.data.stats[0].records[i - 1].values._time), 'yyyy/MM/dd');
-              var actualPointDateStr = format(pointDate, 'yyyy/MM/dd')
-              if (previousPointDateStr !== actualPointDateStr) {
-                date += format(pointDate, 'yyyy/MM/dd')
-              }
+  axios.get(`${process.env.REACT_APP_HOSTNAME}/api/url/stats/${id}`, {
+    params: {
+      start: since,
+      stop: stop,
+      step: step,
+    }
+  }).then((response) => {
+    console.log("http res : ", response)
+    if (response.data.stats.length > 0) {
+      let newData = [];
+      let point;
+      let pointDate;
+      let date = ""
+      let startDate = format(Date.parse(response.data.stats[0].records[0].values._start), 'yyyy/MM/dd');
+      let stopDate = format(Date.parse(response.data.stats[0].records[0].values._stop), 'yyyy/MM/dd');
+      let shouldShowDate = stopDate !== startDate;
+      for (let i = response.data.stats[0].records.length - 1; i >= 0; i--) {
+        date = ""
+        point = response.data.stats[0].records[i].values;
+        pointDate = Date.parse(point._time)
+        if (shouldShowDate) {
+          if (i === 0) {
+            date += format(pointDate, 'yyyy/MM/dd')
+          } else {
+            let previousPointDateStr = format(Date.parse(response.data.stats[0].records[i - 1].values._time), 'yyyy/MM/dd');
+            let actualPointDateStr = format(pointDate, 'yyyy/MM/dd')
+            if (previousPointDateStr !== actualPointDateStr) {
+              date += format(pointDate, 'yyyy/MM/dd') + " ";
             }
           }
-          date += " " + format(pointDate, "kk:mm:ss")
-          newData.push(
-            {
-              "x": date,
-              "y": point._value
-            }
-          );
         }
-        setData([
+        date += format(pointDate, "kk:mm:ss");
+        newData.push(
           {
-            "id": "test",
-            "color": "hsl(74, 70%, 50%)",
-            "data": newData
+            "x": date,
+            "y": point._value
           }
-        ]);
-        newData.length = 0;
-      } else {
-        setData(defaultGraph)
+        );
       }
-    });
-  }, [id, since])
-
-  return data
+      data = [
+        {
+          "id": "test",
+          "color": "hsl(74, 70%, 50%)",
+          "data": newData
+        }
+      ];
+      console.log("output data.js : ", data);
+      setData(data);
+    } else {
+      setData(DefaultData);
+    }
+  });
 };
 
-export default GetData;
+export { GetData, DefaultData };
