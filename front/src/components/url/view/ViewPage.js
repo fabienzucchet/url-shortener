@@ -17,15 +17,13 @@ type Props = {
 
 const ViewPage = (props: Props) => {
     const { id } = props;
-    const [queryRange, setQueryRange] = useState({ id: 1, start: Math.floor(Date.now() / 1000) - 60 * 60, stop: Math.floor(Date.now() / 1000) })
+    const [queryRange, setQueryRange] = useState({ id: id, start: Math.floor(Date.now() / 1000) - 30 * 60, stop: Math.floor(Date.now() / 1000) })
     const newQuery = (id, start, stop) => {
-        console.log("L22 : ", id, start, stop)
         setQueryRange({ id: id, start: start, stop: stop })
     }
-    const [data, setData] = useState(DefaultData)
+    const [data, setData] = useState()
 
     useEffect(() => {
-        console.log("L27 : ", queryRange);
         GetData(queryRange, setData);
     }, [queryRange])
 

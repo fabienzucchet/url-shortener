@@ -21,6 +21,7 @@ def get_stats_url(q: query_api, _start: int, _stop: int, _every: datetime.timede
     |> filter(fn: (r) => r["url_id"] == _url_id)
     |> aggregateWindow(every: _every, fn: sum, createEmpty: true)
     |> cumulativeSum()
+    |> fill(value: 0)
     |> sort(columns: ["_time"], desc: _desc)
     '''.format(bucket)
 
