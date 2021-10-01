@@ -33,11 +33,7 @@ const ListUrlsPage = () => {
 
   useEffect(() => {
     async function fetchUrls() {
-      const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/url/`, {
-        params: {
-          username: user.login // TODO : REMOVE IT AS IT WONT BE USEFUL AFTER MERGING #8
-        }
-      });
+      const response = await axios.get(`${process.env.REACT_APP_HOSTNAME}/api/url/`);
       setUrls(response.data)
     }
     fetchUrls();
