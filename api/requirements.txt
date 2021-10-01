@@ -11,6 +11,8 @@ influxdb-client
 requests_oauthlib
 python-jose
 user-agents
+prometheus_client
+starlette_exporter
 
 # Dev dependencies
 pylint
