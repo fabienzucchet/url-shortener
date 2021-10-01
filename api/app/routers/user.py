@@ -2,7 +2,17 @@
 
 from datetime import timedelta
 
-from fastapi import FastAPI, Depends, Request, HTTPException, Cookie, Response, status, Header, APIRouter
+from fastapi import (
+    FastAPI,
+    Depends,
+    Request,
+    HTTPException,
+    Cookie,
+    Response,
+    status,
+    Header,
+    APIRouter,
+)
 from sqlalchemy.orm import Session
 
 from ..datastores.db import crud, schemas
@@ -23,8 +33,9 @@ router = APIRouter(prefix="/user", tags=["user"])
 @router.put("/", response_model=schemas.User)
 async def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     if crud.get_user(db=db, user=user) is not None:
-        raise HTTPException(status_code=400,
-                            detail="User with this username or email already exists")
+        raise HTTPException(
+            status_code=400, detail="User with this username or email already exists"
+        )
     return crud.create_user(db=db, user=user)
 
 

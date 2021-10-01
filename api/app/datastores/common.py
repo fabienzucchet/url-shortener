@@ -9,8 +9,10 @@ class EnrichedUrl(BaseModel):
     stats: List
 
 
-class RequestMetadata():
-    def __init__(self, referer: str = "", os: str = "", browser: str = "", device: str = ""):
+class RequestMetadata:
+    def __init__(
+        self, referer: str = "", os: str = "", browser: str = "", device: str = ""
+    ):
         self.referer = referer
         self.os = os
         self.browser = browser

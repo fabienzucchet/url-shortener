@@ -5,7 +5,16 @@ import socket
 from typing import List, Optional
 
 
-from fastapi import FastAPI, Depends, Request, HTTPException, Cookie, Response, status, Header
+from fastapi import (
+    FastAPI,
+    Depends,
+    Request,
+    HTTPException,
+    Cookie,
+    Response,
+    status,
+    Header,
+)
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
 from sqlalchemy.orm import Session
@@ -79,9 +88,9 @@ app.add_route("/metrics", handle_metrics)
 
 @app.exception_handler(RequiresLoginException)
 async def exception_handler(request: Request, exc: RequiresLoginException) -> Response:
-    return RedirectResponse(url='/auth/login')
+    return RedirectResponse(url="/auth/login")
 
-
+ 
 hostname = socket.gethostname()
 
 
@@ -97,7 +106,14 @@ async def show_me(user=Depends(get_current_user)):
 
 
 @app.get("/", response_model=schemas.Url)
-async def get_url_by_short_url(short_url: str, username: str = None, db: Session = Depends(get_db), tsdb=Depends(get_timeseries_client), ua_string: Optional[str] = Header(None), referer: Optional[str] = Header(None)):
+async def get_url_by_short_url(
+    short_url: str,
+    username: str = None,
+    db: Session = Depends(get_db),
+    tsdb=Depends(get_timeseries_client),
+    ua_string: Optional[str] = Header(None),
+    referer: Optional[str] = Header(None),
+):
     print(short_url)
     url = crud.get_url_by_short_url(db=db, short_url=short_url)
     if url is None:
@@ -112,7 +128,7 @@ async def get_url_by_short_url(short_url: str, username: str = None, db: Session
         w=tsdb.write_api(write_options=SYNCHRONOUS),
         url_id=url.id,
         username=username,
-        metadata=request_metadata
+        metadata=request_metadata,
     )
     return url
 
